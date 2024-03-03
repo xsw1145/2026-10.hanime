@@ -5,7 +5,7 @@ import "fmt"
 // FormatSize formats the file size and ensure the number of size always > 1.
 // the unit of parameter `size` is Byte.
 func FormatSize(size int64) string {
-	units := [4]string{"B", "KB", "MB", "GB"}
+	units := [4]string{"B", "KiB", "MiB", "GiB"}
 
 	i := 0
 	for v := size; ; i++ {
