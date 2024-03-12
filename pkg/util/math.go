@@ -14,11 +14,11 @@ func FormatSize(size int64) string {
 		}
 		v >>= 10
 	}
-	if i > 3 {
+	if i > 3 { //nolint:gomnd
 		i = 3
 	}
 
-	tmp := 1 << (i * 10)
+	tmp := 1 << (i * 10) //nolint:gomnd
 	num := float64(size) / float64(tmp)
 
 	return fmt.Sprintf("%.2f %s/s", num, units[i])

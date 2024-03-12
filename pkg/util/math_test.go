@@ -1,12 +1,15 @@
-package util
+package util_test
 
 import (
 	"testing"
 
+	"github.com/acgtools/hanime-hunter/pkg/util"
 	"github.com/magiconair/properties/assert"
 )
 
 func TestFormatSize(t *testing.T) {
+	t.Parallel()
+
 	for _, tc := range []struct {
 		name string
 		size int64
@@ -25,17 +28,17 @@ func TestFormatSize(t *testing.T) {
 		{
 			name: "1024",
 			size: 1024,
-			res:  "1.00 KB/s",
+			res:  "1.00 KiB/s",
 		},
 		{
 			name: "1048576",
 			size: 1048576,
-			res:  "1.00 MB/s",
+			res:  "1.00 MiB/s",
 		},
 		{
 			name: "1073741824",
 			size: 1073741824,
-			res:  "1.00 GB/s",
+			res:  "1.00 GiB/s",
 		},
 		{
 			name: "1023",
@@ -45,16 +48,19 @@ func TestFormatSize(t *testing.T) {
 		{
 			name: "1025",
 			size: 1025,
-			res:  "1.00 KB/s",
+			res:  "1.00 KiB/s",
 		},
 		{
-			name: "1,099,511,627,776", // 1TB
+			name: "1,099,511,627,776", // 1TiB
 			size: 1099511627776,
-			res:  "1024.00 GB/s",
+			res:  "1024.00 GiB/s",
 		},
 	} {
+		tc := tc
 		t.Run(tc.name, func(t *testing.T) {
-			s := FormatSize(tc.size)
+			t.Parallel()
+
+			s := util.FormatSize(tc.size)
 
 			assert.Equal(t, s, tc.res)
 		})

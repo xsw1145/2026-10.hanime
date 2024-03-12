@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/acgtools/hanime-hunter/pkg/util"
-
 	"github.com/charmbracelet/lipgloss"
 )
 
