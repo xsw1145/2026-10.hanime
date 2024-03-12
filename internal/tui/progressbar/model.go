@@ -64,8 +64,17 @@ func (pw *ProgressWriter) Start(p *tea.Program) (int64, error) {
 func (pw *ProgressWriter) Write(p []byte) (int, error) {
 	pw.Downloaded += int64(len(p))
 	if pw.Total > 0 && pw.OnProgress != nil {
-		speed := pw.Downloaded / int64(time.Since(pw.StartTime).Seconds())
-		dltime := float64((pw.Total - pw.Downloaded) / speed)
+		t := int64(time.Since(pw.StartTime).Seconds())
+		var speed int64
+		if t > 0 {
+			speed = pw.Downloaded / t
+		}
+
+		var dltime float64
+		if speed > 0 {
+			dltime = float64((pw.Total - pw.Downloaded) / speed)
+		}
+
 		pw.OnProgress(pw.FileName, float64(pw.Downloaded)/float64(pw.Total), dltime, speed)
 	}
 	return len(p), nil
